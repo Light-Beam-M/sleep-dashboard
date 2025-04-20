@@ -3,7 +3,7 @@ services:
     name: sleep-health-dashboard
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn test2:server
+    startCommand: gunicorn SleepHealth_Analysis_Main:server
     envVars:
       - key: PYTHON_VERSION
         value: 3.9.0
