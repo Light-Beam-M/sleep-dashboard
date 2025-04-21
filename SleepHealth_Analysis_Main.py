@@ -40,7 +40,7 @@ except FileNotFoundError:
         'heart_rate': np.random.normal(70, 8, n_samples).clip(50, 95).astype(int),
         'daily_steps': np.random.randint(2000, 15000, n_samples),
         'sleep_disorder': np.random.choice(['None', 'Insomnia', 'Sleep Apnea'], n_samples, p=[0.7, 0.2, 0.1]),
-        'bmi_category': np.random.choice(['Underweight', 'Normal', 'Overweight', 'Obese'], n_samples, p=[0.05, 0.5, 0.3, 0.15])
+        'bmi_category': np.random.choice(['Underweight', 'Normal', 'Overweight', 'Obese'], n_samples, p=[0.2, 0.5, 0.2, 0.1])
     })
 
 # Create age groups for filtering
@@ -629,15 +629,21 @@ def update_factor_content(tab, gender, age_group, occupation, disorder, theme):
         
     else:  # BMI tab
         # Create two plots for BMI section
+
+        filtered_df['bmi_category'] = filtered_df['bmi_category'].replace({
+        'Normal': 'Underweight',
+        'Normal Weight': 'Normal'
+        })
+
         fig1 = px.box(
-            filtered_df, 
-            x='bmi_category', 
-            y='sleep_duration', 
-            color='bmi_category',
-            color_discrete_sequence=theme_colors["chart_colors"],
-            category_orders={"bmi_category": ["Obese", "Overweight", "Normal", "Underweight"]},
-            labels={'sleep_duration': 'Sleep Duration (hours)'},
-            height=350
+        filtered_df, 
+        x='bmi_category', 
+        y='sleep_duration', 
+        color='bmi_category',
+        color_discrete_sequence=theme_colors["chart_colors"],
+        category_orders={"bmi_category": ["Obese", "Overweight", "Normal", "Underweight"]},
+        labels={'sleep_duration': 'Sleep Duration (hours)', 'bmi_category': 'BMI Category'},
+        height=350
         )
         
         fig1.update_layout(
@@ -657,7 +663,7 @@ def update_factor_content(tab, gender, age_group, occupation, disorder, theme):
             size='physical_activity_level',
             color_discrete_sequence=theme_colors["chart_colors"],
             category_orders={"bmi_category": ["Obese", "Overweight", "Normal", "Underweight"]},
-            labels={'quality_of_sleep': 'Sleep Quality (1-10)'},
+            labels={'quality_of_sleep': 'Sleep Quality (1-10)', 'bmi_category': 'BMI Category'},
             height=350
         )
         
