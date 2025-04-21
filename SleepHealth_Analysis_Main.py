@@ -938,13 +938,6 @@ def update_personalized_insights(gender, age_group, occupation, disorder, theme)
             html.P("Recommendation: Aim for at least 30 minutes of moderate exercise daily, which has been shown to improve sleep quality.")
         ], style={"marginBottom": "1rem"}))
     
-    if sleep_disorders_pct > 30:
-        insights.append(html.Div([
-            html.H4("⚠️ Sleep Disorders Present", style={"color": theme_colors["accent4"]}),
-            html.P(f"{sleep_disorders_pct:.1f}% of individuals in this group have a diagnosed sleep disorder."),
-            html.P("Recommendation: If you experience persistent sleep problems, consider consulting a sleep specialist for proper diagnosis and treatment.")
-        ], style={"marginBottom": "1rem"}))
-    
     # Key sleep factors
     top_factors = html.Div([
         html.H3("Key Factors for Better Sleep", style={"color": theme_colors["accent1"], "marginTop": "1.5rem"}),
