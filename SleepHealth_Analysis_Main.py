@@ -52,26 +52,26 @@ light_theme = {
     'background': '#f8fafc',
     'card': '#ffffff',
     'text': '#334155',
-    'accent1': '#3b82f6',  # Blue
-    'accent2': '#10b981',  # Green
-    'accent3': '#8b5cf6',  # Purple
-    'accent4': '#ef4444',  # Red
-    'accent5': '#f59e0b',  # Amber
+    'accent1': '#0072B2',  
+    'accent2': '#009E73',    
+    'accent3': '#CC79A7',  
+    'accent4': '#E69F00',  
+    'accent5': '#56B4E9',  
     'muted': '#94a3b8',
-    'chart_colors': ["#3b82f6", "#10b981", "#8b5cf6", "#ef4444", "#f59e0b", "#06b6d4"]
+    'chart_colors': ["#0072B2", "#009E73", "#D55E00", "#CC79A7", "#F0E442", "#56B4E9"]
 }
 
 dark_theme = {
     'background': '#1e293b',
     'card': '#334155',
     'text': '#f1f5f9',
-    'accent1': '#60a5fa',  # Blue
-    'accent2': '#34d399',  # Green
-    'accent3': '#a78bfa',  # Purple
-    'accent4': '#f87171',  # Red
-    'accent5': '#fbbf24',  # Amber
+    'accent1': '#56B4E9',  
+    'accent2': '#009E73',  
+    'accent3': '#CC79A7',  
+    'accent4': '#F0E442',  
+    'accent5': '#D55E00',  
     'muted': '#cbd5e1',
-    'chart_colors': ["#60a5fa", "#34d399", "#a78bfa", "#f87171", "#fbbf24", "#22d3ee"]
+    'chart_colors': ["#56B4E9", "#009E73", "#D55E00", "#CC79A7", "#F0E442", "#0072B2"]
 }
 
 current_theme = light_theme
@@ -635,7 +635,7 @@ def update_factor_content(tab, gender, age_group, occupation, disorder, theme):
             y='sleep_duration', 
             color='bmi_category',
             color_discrete_sequence=theme_colors["chart_colors"],
-            category_orders={"bmi_category": ["Underweight", "Normal", "Overweight", "Obese"]},
+            category_orders={"bmi_category": ["Obese", "Overweight", "Normal", "Underweight"]},
             labels={'sleep_duration': 'Sleep Duration (hours)'},
             height=350
         )
@@ -656,7 +656,7 @@ def update_factor_content(tab, gender, age_group, occupation, disorder, theme):
             color='bmi_category',
             size='physical_activity_level',
             color_discrete_sequence=theme_colors["chart_colors"],
-            category_orders={"bmi_category": ["Underweight", "Normal", "Overweight", "Obese"]},
+            category_orders={"bmi_category": ["Obese", "Overweight", "Normal", "Underweight"]},
             labels={'quality_of_sleep': 'Sleep Quality (1-10)'},
             height=350
         )
@@ -936,6 +936,13 @@ def update_personalized_insights(gender, age_group, occupation, disorder, theme)
             html.H4("⚠️ Low Physical Activity", style={"color": theme_colors["accent5"]}),
             html.P(f"{low_activity_pct:.1f}% of individuals in this group have lower than recommended physical activity levels."),
             html.P("Recommendation: Aim for at least 30 minutes of moderate exercise daily, which has been shown to improve sleep quality.")
+        ], style={"marginBottom": "1rem"}))
+    
+    if sleep_disorders_pct > 30:
+        insights.append(html.Div([
+            html.H4("⚠️ Sleep Disorders Present", style={"color": theme_colors["accent4"]}),
+            html.P(f"{sleep_disorders_pct:.1f}% of individuals in this group have a diagnosed sleep disorder."),
+            html.P("Recommendation: If you experience persistent sleep problems, consider consulting a sleep specialist for proper diagnosis and treatment.")
         ], style={"marginBottom": "1rem"}))
     
     # Key sleep factors
